@@ -1,0 +1,136 @@
+/**
+ * Design tokens.
+ *
+ * Palette and geometry follow the `youtube-live-server.html` mockup: an 8-12px
+ * base scale, 5-8px radii, compact controls, and a cool blue-black surface ramp.
+ *
+ * One deliberate deviation: PRD §5.2 sets a 44x44px minimum touch target. The
+ * mockup draws 29px buttons, which is fine for a pointer and unusable on a
+ * phone. The visual weight here is compact, but interactive elements keep a 44px
+ * hit area through --touch-target and the padding rules below.
+ *
+ * The app is always dark; there is no theme switch.
+ */
+
+:root {
+  /* Palette (mockup tokens) */
+  --color-bg: #081521;
+  --color-bg-elevated: #0a192b;
+  --color-card: #122131;
+  --color-card-hover: #173047;
+  --color-border: #2b3d50;
+  --color-border-strong: #3a5170;
+  --color-border-subtle: #1a2b3e;
+
+  --color-accent: #098bff;
+  --color-accent-hover: #149ef7;
+  --color-accent-soft: rgba(9, 139, 255, 0.16);
+  /* The mockup's active-nav gradient end. */
+  --color-accent-deep: #0780ed;
+
+  --color-success: #20ca54;
+  --color-success-soft: rgba(32, 202, 84, 0.16);
+  --color-danger: #f32036;
+  --color-danger-soft: rgba(243, 32, 54, 0.16);
+  --color-warning: #eab308;
+  --color-warning-soft: rgba(234, 179, 8, 0.16);
+
+  --color-text: #edf1f6;
+  --color-text-muted: #aebbd0;
+  --color-text-faint: #7c8ba3;
+
+  /* Radii: the mockup uses 5-8px throughout. */
+  --radius-sm: 4px;
+  --radius-md: 5px;
+  --radius-lg: 8px;
+  --radius-pill: 999px;
+
+  /* Spacing: the mockup runs on 8-14px steps. */
+  --space-1: 3px;
+  --space-2: 6px;
+  --space-3: 9px;
+  --space-4: 12px;
+  --space-5: 16px;
+  --space-6: 22px;
+  --space-8: 30px;
+
+  /* Layout */
+  --sidebar-width: 172px;
+  --header-height: 64px;
+  /* Hit-area floor. Visual padding stays compact; this governs the box. */
+  --touch-target: 44px;
+  --content-max: 1900px;
+  /* Dense controls in the mockup sit at 29px; keep text rows readable. */
+  --control-height: 29px;
+  --row-height: 32px;
+
+  /* Elevation: the mockup uses shallow shadows plus a 1px top highlight. */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 3px 8px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 14px 34px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.03);
+  --shadow-card-hover: 0 5px 14px rgba(0, 0, 0, 0.42), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  /* The accent glow the mockup puts on the live card. */
+  --shadow-live: inset 0 1px 10px rgba(255, 255, 255, 0.09), 0 0 14px rgba(210, 19, 41, 0.18);
+
+  /* Surfaces used by the mockup's gradients. */
+  --surface-card: linear-gradient(125deg, rgba(22, 40, 58, 0.96), rgba(15, 29, 42, 0.97));
+  --surface-sidebar: linear-gradient(135deg, rgba(10, 25, 43, 0.88), rgba(5, 17, 28, 0.86));
+  --surface-header: linear-gradient(100deg, rgba(9, 22, 40, 0.7), rgba(15, 33, 52, 0.4));
+  --surface-page: radial-gradient(ellipse at 65% 0, #142b43 0, transparent 54%),
+    linear-gradient(135deg, #091625, #07131d);
+  --surface-metric: linear-gradient(125deg, #132638, #112030);
+  --surface-metric-active: linear-gradient(115deg, #c90928, #f21329);
+
+  /* Type: the mockup is Arial at 12px with tight labels. */
+  --font-sans: Arial, Helvetica, 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', ui-monospace, 'Cascadia Code', Consolas, monospace;
+
+  --text-xs: 10px;
+  --text-sm: 11.5px;
+  --text-base: 12px;
+  --text-md: 13.5px;
+  --text-lg: 16px;
+  --text-xl: 19px;
+  --text-2xl: 22px;
+  --text-metric: 16px;
+  --text-display: 21px;
+
+  --leading-tight: 1.1;
+  --leading-normal: 1.45;
+  --tracking-wide: 0.05em;
+  --tracking-tight: -0.3px;
+
+  /* Motion */
+  --transition-fast: 120ms ease;
+  --transition-base: 180ms ease;
+
+  /* Status tones, reused by badges, meters and cards */
+  --tone-ok: var(--color-success);
+  --tone-ok-soft: var(--color-success-soft);
+  --tone-warn: var(--color-warning);
+  --tone-warn-soft: var(--color-warning-soft);
+  --tone-error: var(--color-danger);
+  --tone-error-soft: var(--color-danger-soft);
+  --tone-idle: var(--color-text-faint);
+  --tone-idle-soft: rgba(174, 187, 208, 0.14);
+  --tone-live: var(--color-danger);
+  --tone-live-soft: var(--color-danger-soft);
+
+  /* Live state pulse. Honours the reduced-motion preference. */
+  --pulse-live: ytlive-pulse 1.6s ease-in-out infinite;
+
+  @keyframes ytlive-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.4;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    --pulse-live: none;
+  }
+}

@@ -1,0 +1,301 @@
+/**
+ * Reset, base typography, scrollbars and keyboard focus rings (PRD §5.2).
+ *
+ * Component classes live next to their component in BEM-ish form:
+ *   .block            .block__element        .block--modifier
+ *
+ * Responsive rules live at the bottom: 900px turns the sidebar into a
+ * drawer and drops to two columns, 480px drops to one. Nothing may overflow
+ * horizontally at 360px, so long words and unbreakable ids are contained.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure {
+  margin: 0;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+}
+
+img,
+video {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* Long filenames, ids and URLs must wrap instead of widening the page. */
+p,
+li,
+td,
+th,
+dd,
+dt,
+h1,
+h2,
+h3,
+h4,
+span,
+label {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* --- scrollbars --- */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-strong) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--color-bg);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #37608a;
+}
+
+/* --- focus: keyboard only, always visible (PRD §5.2) --- */
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* A mouse click should not leave a ring behind. */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* --- shared primitives --- */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 200;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-accent);
+  color: #ffffff;
+  border-radius: var(--radius-sm);
+  transform: translateY(-200%);
+  transition: transform var(--transition-fast);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.card__title {
+  font-size: var(--text-md);
+  font-weight: 600;
+}
+
+.card__body {
+  padding: var(--space-4);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.field__label {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.field__hint {
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+}
+
+.field__error {
+  font-size: var(--text-xs);
+  color: var(--color-danger);
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  min-height: var(--touch-target);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.input:hover,
+.select:hover,
+.textarea:hover {
+  border-color: #37608a;
+}
+
+.input:focus-visible,
+.select:focus-visible,
+.textarea:focus-visible {
+  border-color: var(--color-accent);
+}
+
+.textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--touch-target);
+  cursor: pointer;
+}
+
+.checkbox input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+
+/* --- toast region --- */
+
+.toast-region {
+  position: fixed;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: min(380px, calc(100vw - var(--space-6)));
+}
+
+/* --- responsive: tablet then phone --- */
+
+@media (max-width: 900px) {
+  .toast-region {
+    right: var(--space-3);
+    left: var(--space-3);
+    bottom: var(--space-3);
+    max-width: none;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --header-height: 56px;
+    --space-4: 12px;
+    --space-5: 16px;
+    --space-6: 18px;
+  }
+
+  .card__body {
+    padding: var(--space-3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

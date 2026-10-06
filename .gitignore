@@ -1,0 +1,26 @@
+# Build output
+/ytliveserver
+/ytliveserver.exe
+/dist/
+web/dist/
+web/node_modules/
+
+# Runtime data: database, encryption key, media, logs, temp uploads
+/data/
+/testdata/
+*.db
+*.db-wal
+*.db-shm
+streamkey.key
+
+# Local artifacts
+*.exe
+*.test
+*.out
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
